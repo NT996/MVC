@@ -1,0 +1,43 @@
+﻿@model IzdavackaKuca.ViewModels.MemberFormViewModel
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Member</h2>
+
+@using (Html.BeginForm("Save", "Members"))
+{
+    <div class="form-group">
+        @Html.LabelFor(n => n.Member.Name)
+        @Html.TextBoxFor(n => n.Member.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Member.Surname)
+        @Html.TextBoxFor(n => n.Member.Surname, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Member.Email)
+        @Html.TextBoxFor(n => n.Member.Email, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Member.Address)
+        @Html.TextBoxFor(n => n.Member.Address, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Member.DateofBirth)
+        @Html.TextBoxFor(n => n.Member.DateofBirth, "{0:d MMM yyyy}", new { @class = "form-control" }) <!--Ubacujemo format da datum da nam ne prikazuje vreme-->
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Member.PlaceOfBIrth)
+        @Html.TextBoxFor(n => n.Member.PlaceOfBIrth, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Member.StatusID)
+        @Html.DropDownListFor(n => n.Member.StatusID, new SelectList(Model.Statuses, "ID", "Name"), "Select Your Status ", new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(n => n.Member.ID)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-default">Save</button>
+}
+

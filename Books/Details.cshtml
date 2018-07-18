@@ -1,0 +1,16 @@
+﻿@model IzdavackaKuca.Models.Book
+
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Name</h2>
+<ul>
+    <li>Autor: @Model.Autor</li>
+    <li>Genre: @Model.Genre.Name</li>
+    <li>Year Of Publication: @Model.YearofPublication</li>
+    <li>Price: @Model.Price</li>
+    <li>On Sale: @Model.OnSale</li>
+    <li>Number in stock: @Model.NumberInStock</li>
+</ul>

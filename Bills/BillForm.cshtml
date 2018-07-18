@@ -1,0 +1,40 @@
+﻿@model IzdavackaKuca.ViewModels.BillFormViewModel
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Bill</h2>
+
+@using (Html.BeginForm("Save", "Bills"))
+{
+    <div class="form-group">
+        @Html.LabelFor(b => b.Bill.MemberID)
+        @Html.DropDownListFor(b => b.Bill.MemberID, new SelectList(Model.Members, "ID", "Name"), "Select Member ", new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Bill.MemberID)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Bill.BookID)
+        @Html.DropDownListFor(b => b.Bill.BookID, new SelectList(Model.Books, "ID", "Name"), "Select Book ", new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Bill.BookID)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Bill.IssuingDate)
+        @Html.TextBoxFor(b => b.Bill.IssuingDate, "{0:d MMM yyyy}", new { @class = "form-control" }) <!--Ubacujemo format da datum da nam ne prikazuje vreme-->
+        @Html.ValidationMessageFor(b => b.Bill.IssuingDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Bill.Total)
+        @Html.TextBoxFor(b => b.Bill.Total, new { @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Bill.Total)
+    </div>
+    @Html.HiddenFor(b => b.Bill.ID)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-default">Save</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jquery")
+}
+

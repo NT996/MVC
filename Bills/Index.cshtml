@@ -1,0 +1,62 @@
+﻿@model IEnumerable<IzdavackaKuca.Models.Bill>
+@{
+    ViewBag.Title = "Bills";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Bills</h2>
+<p>
+    @Html.ActionLink("New Bill", "New", "Bills", null, new { @class = "btn btn-primary" })
+</p>
+@if (!Model.Any())
+{
+    <p>Nemamo racun u bazi.</p>
+}
+else
+{
+    <table id="bills" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>Book</th>
+                <th>Issuing Date</th>
+                <th>Total</th>
+                <th>Delete bill</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bill in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(bill.Members.Name, "Edit", "Bills", new { Id = bill.ID }, null)</td>
+                    <td>@bill.Book.Name</td>
+                    <td>@bill.IssuingDate</td>
+                    <td>@bill.Total</td>
+                    <td><button data-bill-id="@bill.ID" class="btn btn-link js-delete">DELETE</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<!--Dodajemo Delete link na svakom posebnom racunu i kada korisnik klikne na taj link koristice se jQuery da pozove API i na taj nacin ce se obrisati racun iz baze-->
+@section scripts
+{
+    @*Dodajemo skript tag*@
+    <script>
+        $(document).ready(function () {
+            $(".js-delete").on("click", function () {
+                var button = $(this);
+                if (confirm("Da li ste sigurni da zelite da obrisete racun iz baze?")) {
+                    $.ajax({
+                        url: "/api/bills/" + $(this).attr("data-bill-id"),
+                        method: "DELETE",
+                        success: function () {
+                            alert("Clan je uspesno obrisan!.");
+                            button.parents("tr").remove();
+                        }
+                    })
+                };
+            });
+        });
+    </script>
+}

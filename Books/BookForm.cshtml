@@ -1,0 +1,49 @@
+﻿@model IzdavackaKuca.ViewModels.BookFormViewModel
+@{
+    /**/
+
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Book</h2>
+
+@using (Html.BeginForm("Save", "Books"))
+{
+    <div class="form-group">
+        @Html.LabelFor(n => n.Book.Name)
+        @Html.TextBoxFor(n => n.Book.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Book.Autor)
+        @Html.TextBoxFor(n => n.Book.Autor, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Book.OnSale)
+        @Html.TextBoxFor(n => n.Book.OnSale, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Book.Price)
+        @Html.TextBoxFor(n => n.Book.Price, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Book.YearofPublication)
+        @Html.TextBoxFor(n => n.Book.YearofPublication, "{0:d MMM yyyy}", new { @class = "form-control" }) <!--Ubacujemo format da datum da nam ne prikazuje vreme-->
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Book.NumberInStock)
+        @Html.TextBoxFor(n => n.Book.NumberInStock, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Book.GenreID)
+        @Html.DropDownListFor(n => n.Book.GenreID, new SelectList(Model.Genres, "ID", "Name"), "Select Genre ", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Book.PublisherID)
+        @Html.DropDownListFor(n => n.Book.PublisherID, new SelectList(Model.Publishers, "ID", "Name"), "Select Publisher ", new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(n => n.Book.ID)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
